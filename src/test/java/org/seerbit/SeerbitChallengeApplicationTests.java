@@ -25,7 +25,11 @@ class SeerbitChallengeApplicationTests {
 
         ResponseEntity<String> response = transactionService.submitTransaction(dto);
 
-        //assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(
+                "transaction creation test",
+                HttpStatus.CREATED,
+                response.getStatusCode().value()
+        );
     }
 
     @Test
