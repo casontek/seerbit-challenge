@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TransactionStatsController {
     private final TransactionService transactionService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<TransactionStats> getTransactions() {
 
         return  transactionService.getTransactionStats();

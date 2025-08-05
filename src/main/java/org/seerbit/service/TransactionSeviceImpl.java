@@ -24,13 +24,14 @@ public class TransactionSeviceImpl implements TransactionService {
     public ResponseEntity<String> submitTransaction(TransactionRequestDto dto) {
         try {
             long currentTime = Instant.now().getEpochSecond();
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            long transactionTime = dateFormat.parse(dto.timestamp()).getTime();
+            long transactionTime = Instant.parse(dto.timestamp()).getEpochSecond();
+            System.out.println(Instant.now());
 
-            if(transactionTime > currentTime) {
+            if(transactionTime - currentTime > 5) {
                 return new ResponseEntity<>("", HttpStatus.UNPROCESSABLE_ENTITY);
             }
             else if(currentTime - transactionTime > 30) {
+
                 return new ResponseEntity<>("", HttpStatus.UNPROCESSABLE_ENTITY);
             }
             else  {
@@ -38,7 +39,7 @@ public class TransactionSeviceImpl implements TransactionService {
                 transactions.add(new Transaction(
                         transactions.size() + 1,
                         dto.amount(),
-                        Instant.parse(dateFormat.format(dto.timestamp())))
+                        Instant.parse(dto.timestamp()))
                 );
 
                 return new ResponseEntity<>("", HttpStatus.CREATED);
